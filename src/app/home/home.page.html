@@ -1,0 +1,106 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="app-toolbar">
+    <div class="toolbar-brand" slot="start">
+      <ion-icon name="bicycle-outline"></ion-icon>
+      <span>KurirTrack</span>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="logout-btn" (click)="logout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home-content">
+
+  <!-- MAP SECTION -->
+  <div class="map-section">
+    <div #map id="map"></div>
+
+    <!-- Map Layer Switcher -->
+    <div class="map-layers">
+      <button
+        *ngFor="let layer of mapLayers"
+        class="layer-btn"
+        [class.active]="activeLayer === layer.id"
+        (click)="switchLayer(layer.id)">
+        <ion-icon [name]="layer.icon"></ion-icon>
+        <span>{{ layer.label }}</span>
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="mapState === 'loading'" class="map-overlay-state">
+      <div class="spinner"></div>
+      <span>Memuat peta...</span>
+    </div>
+
+    <!-- GPS off -->
+    <div *ngIf="mapState === 'location-off'" class="map-overlay-state warning">
+      <ion-icon name="navigate-outline"></ion-icon>
+      <span>GPS dimatikan</span>
+      <small>Aktifkan lokasi di pengaturan HP</small>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="mapState === 'error'" class="map-overlay-state error">
+      <ion-icon name="warning-outline"></ion-icon>
+      <span>{{ mapErrorMsg }}</span>
+    </div>
+  </div>
+
+  <!-- KOORDINAT BAR -->
+  <div class="koordinat-bar" [class.gps-off]="latitude === 0">
+    <div class="koordinat-item">
+      <span class="koordinat-label">LAT</span>
+      <span class="koordinat-value">{{ latitude === 0 ? '—' : (latitude | number:'1.4-6') }}</span>
+    </div>
+    <div class="koordinat-divider"></div>
+    <div class="koordinat-item">
+      <span class="koordinat-label">LNG</span>
+      <span class="koordinat-value">{{ longitude === 0 ? '—' : (longitude | number:'1.4-6') }}</span>
+    </div>
+    <div *ngIf="latitude === 0" class="gps-badge">
+      <ion-icon name="warning-outline"></ion-icon> GPS mati
+    </div>
+  </div>
+
+  <!-- FORM SECTION -->
+  <div class="form-wrapper">
+
+    <div class="section-title">
+      <ion-icon name="cube-outline"></ion-icon>
+      <span>Konfirmasi Pengiriman</span>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Nomor Resi</label>
+      <div class="input-wrap">
+        <ion-icon name="barcode-outline" class="input-icon"></ion-icon>
+        <ion-input placeholder="Contoh: RESI12345" [(ngModel)]="noResi" class="resi-input"></ion-input>
+      </div>
+    </div>
+
+    <!-- Foto preview -->
+    <div *ngIf="fotoPreview" class="foto-preview">
+      <img [src]="fotoPreview" alt="Foto Paket" />
+      <div class="foto-badge">
+        <ion-icon name="checkmark-circle"></ion-icon> Foto siap
+      </div>
+    </div>
+
+    <!-- Foto placeholder -->
+    <div *ngIf="!fotoPreview" class="foto-placeholder">
+      <ion-icon name="camera-outline"></ion-icon>
+      <span>Foto akan diambil saat konfirmasi</span>
+    </div>
+
+    <ion-button expand="block" class="kirim-btn" (click)="kirimPaket()">
+      <ion-icon name="send-outline" slot="start"></ion-icon>
+      Konfirmasi Pengiriman
+    </ion-button>
+
+  </div>
+
+</ion-content>

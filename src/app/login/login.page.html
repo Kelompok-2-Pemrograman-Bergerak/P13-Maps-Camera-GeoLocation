@@ -1,0 +1,65 @@
+<ion-content class="login-content">
+
+  <!-- Background decoration -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div class="login-wrapper">
+
+    <!-- Logo / Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <ion-icon name="bicycle-outline"></ion-icon>
+      </div>
+      <h1 class="brand-name">KurirTrack</h1>
+      <p class="brand-sub">Platform Manajemen Pengiriman</p>
+    </div>
+
+    <!-- Card -->
+    <div class="login-card">
+      <h2 class="card-title">Selamat Datang</h2>
+      <p class="card-desc">Masuk dengan akun kurir Anda</p>
+
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <div class="field-wrap">
+          <ion-icon name="mail-outline" class="field-icon"></ion-icon>
+          <ion-input
+            type="email"
+            placeholder="nama@email.com"
+            [(ngModel)]="email"
+            class="field-input">
+          </ion-input>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <div class="field-wrap">
+          <ion-icon name="lock-closed-outline" class="field-icon"></ion-icon>
+          <ion-input
+            type="password"
+            placeholder="••••••••"
+            [(ngModel)]="password"
+            class="field-input">
+          </ion-input>
+        </div>
+      </div>
+
+      <ion-button expand="block" class="btn-login" (click)="login()" [disabled]="isLoading">
+        <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+        <ion-icon *ngIf="!isLoading" name="log-in-outline" slot="start"></ion-icon>
+        Masuk
+      </ion-button>
+
+      <div class="divider"><span>atau</span></div>
+
+      <ion-button expand="block" fill="outline" class="btn-register" (click)="register()" [disabled]="isLoading">
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        Buat Akun Baru
+      </ion-button>
+    </div>
+
+  </div>
+
+</ion-content>
